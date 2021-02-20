@@ -3,8 +3,6 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/analytics";
 
-console.log(process.env);
-
 // get config keys from .env file
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
