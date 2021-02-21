@@ -1,14 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
+import { Context } from "../services/store";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { useAuth } from "../providers/AuthProvider";
 import { useHistory, Redirect } from "react-router-dom";
+import Loading from "../components/loading/loading,component";
 
 export default function Signup() {
+  const { errorLogin, loadingIndicator } = useContext(Context);
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login, currentUser } = useAuth();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = errorLogin;
+  const [loading, setLoading] = loadingIndicator;
   const history = useHistory();
 
   async function handleSubmit(e) {
@@ -22,8 +25,11 @@ export default function Signup() {
     } catch {
       setError("Failed to log in");
     }
-
     setLoading(false);
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (
@@ -33,7 +39,7 @@ export default function Signup() {
         style={{ minHeight: "100vh" }}
       >
         <div className="w-100" style={{ maxWidth: "40%" }}>
-          {!currentUser ? (
+          {!currentUser && !loading ? (
             <Card>
               <Card.Body>
                 <h2 className="text-center mb-4">Inloggen</h2>

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../services/firebase";
+import { Context } from "../services/store";
+import { auth, db } from "../services/firebase";
 
 const AuthContext = React.createContext();
 
@@ -8,8 +9,10 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  const { errorLogin, loadingIndicator } = useContext(Context);
+  const [loginError, setLoginError] = errorLogin;
   const [currentUser, setCurrentUser] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = loadingIndicator;
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -36,8 +39,20 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    console.log("AuthProvider()");
+    setLoading(true);
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const userRef = db.collection("users").doc(user.uid);
+        userRef.get().then((doc) => {
+          const user = doc.data();
+          // check if user is admin
+          if (!user.isAdmin) {
+            logout();
+            setLoginError("User has not admin rights");
+            setCurrentUser(null);
+          }
+        });
+      }
       setCurrentUser(user);
       setLoading(false);
     });
