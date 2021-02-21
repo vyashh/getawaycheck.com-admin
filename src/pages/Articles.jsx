@@ -7,9 +7,9 @@ export default function Dashboard() {
   return (
     <>
       <NavBar />
-      <SideBar activeNav="0">
+      <SideBar activeNav="1">
         <div className="h-100 row align-items-center text-center">
-          <div className="col">Dashboard getawaycheck.com</div>
+          <div className="col">Articles</div>
         </div>
       </SideBar>
       <Footer />

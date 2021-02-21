@@ -1,0 +1,11 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: gray;
+
+  & a {
+    font-weight: bold;
+    color: gray;
+  }
+}
