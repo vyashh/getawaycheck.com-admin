@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Form, Button } from "react-bootstrap";
-import LocationSearch from "../location_search/location_search.component";
+import Map from "../map_search/map/map.component";
 
 export default function ArticleCreate() {
   const titleRef = useRef();
@@ -14,9 +14,7 @@ export default function ArticleCreate() {
           <Form.Control type="text" ref={titleRef} required />
         </Form.Group>
         <Form.Group id="location">
-          <LocationSearch />
-          <Form.Label>Location</Form.Label>
-          <Form.Control type="text" ref={locationRef} required />
+          <Map />
         </Form.Group>
         <Button type="submit" className="w-100">
           Add
