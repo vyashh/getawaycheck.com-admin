@@ -2,6 +2,7 @@ import "./sidebar.styles.scss";
 
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../footer/footer.component";
 
 export default class SideBar extends Component {
   render() {
@@ -44,12 +45,13 @@ export default class SideBar extends Component {
 
             <main
               role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 "
+              className="h-100 col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 "
             >
               {this.props.children}
             </main>
           </div>
         </div>
+        <Footer />
       </>
     );
   }

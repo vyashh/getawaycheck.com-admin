@@ -12,7 +12,6 @@ export default function Dashboard() {
           <div className="col">Dashboard getawaycheck.com</div>
         </div>
       </SideBar>
-      <Footer />
     </>
   );
 }
