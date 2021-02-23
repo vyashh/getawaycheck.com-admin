@@ -1,16 +1,35 @@
-import React, { useRef, useState, useCallback } from "react";
-import { Form, Button, Row, Col, Card, Input } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
+import dayjs from "dayjs";
 import "./articles-create.styles.scss";
+import { addArticle } from "../../services/firestore";
 
 export default function ArticleCreate() {
-  const titleRef = useRef();
-  const locationRef = useRef();
-
+  const history = useHistory();
   const [title, setTitle] = useState(null);
   const [address, setAddress] = useState(null);
   const [latLng, setLatLng] = useState({});
+  const [content, setContent] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
+
+  const onSubmit = async (event) => {
+    const allData = {
+      title: title,
+      address: address,
+      latLng: latLng,
+      content: content,
+      isPublic: isPublic,
+      dateTime: dayjs().format(),
+    };
+
+    // event.preventDefault();
+
+    await addArticle(allData);
+    history.push("/articles");
+  };
 
   return (
     <div>
@@ -35,14 +54,8 @@ export default function ArticleCreate() {
               />
             </Form.Group>
             <Form.Group id="text-editor">
-              {/* <TextEditor setContent={setContent} contentState={content} /> */}
+              <TextEditor content={content} setContent={setContent} />
             </Form.Group>
-            <a
-              className="btn btn-danger"
-              onClick={() => console.log(title, address, latLng)}
-            >
-              See stuff
-            </a>
           </Form>
         </Col>
         <Col xl={3} lg={3} md={4} sm={12} xs={12}>
@@ -52,13 +65,20 @@ export default function ArticleCreate() {
               <Form>
                 <Form.Group>
                   <Form.Label>Publish</Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control
+                    as="select"
+                    onChange={() => setIsPublic(!isPublic)}
+                  >
                     <option>True</option>
-                    <option>False</option>
+                    <option selected="selected">False</option>
                   </Form.Control>
                 </Form.Group>
                 <Form.Group className=" d-flex justify-content-center">
-                  <Button type="submit" className="btn btn-danger">
+                  <Button
+                    onClick={onSubmit}
+                    type="submit"
+                    className="btn btn-danger"
+                  >
                     Submit
                   </Button>
                 </Form.Group>

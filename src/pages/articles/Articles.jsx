@@ -21,7 +21,7 @@ export default function Dashboard() {
           {!isCreateArticle ? (
             "Create Article"
           ) : (
-            <span className="text-danger" aria-hidden="true">
+            <span className="text-danger font-weight-bold" aria-hidden="true">
               &times;
             </span>
           )}

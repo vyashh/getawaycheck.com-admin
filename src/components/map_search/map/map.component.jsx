@@ -52,7 +52,7 @@ export default function Map({ setAddress, setLatLng }) {
         showMap={showMap}
         setShowMap={setShowMap}
       />
-      {showMap ? (
+      <div style={{ display: showMap ? "block" : "none" }}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={12}
@@ -62,7 +62,7 @@ export default function Map({ setAddress, setLatLng }) {
         >
           <Marker key={0} position={{ lat: marker.lat, lng: marker.lng }} />
         </GoogleMap>
-      ) : null}
+      </div>
     </div>
   );
 }
