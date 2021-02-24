@@ -14,10 +14,12 @@ export default function ArticleCreate() {
   const [latLng, setLatLng] = useState({});
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [category, setCategory] = useState();
 
   const onSubmit = async (event) => {
     const allData = {
       title: title,
+      category: category,
       address: address,
       latLng: latLng,
       content: content,
@@ -64,6 +66,15 @@ export default function ArticleCreate() {
             <Card.Body>
               <Form>
                 <Form.Group>
+                  <Form.Label>Category</Form.Label>
+                  <Form.Control as="select">
+                    <option selected="selected"></option>
+                    <option onChange={() => setCategory("bar")}>Bar</option>
+                    <option onChange={() => setCategory("food")}>Food</option>
+                    <option onChange={() => setCategory("hotel")}>Hotel</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
                   <Form.Label>Publish</Form.Label>
                   <Form.Control
                     as="select"
@@ -73,7 +84,7 @@ export default function ArticleCreate() {
                     <option selected="selected">False</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group className=" d-flex justify-content-center">
+                <Form.Group className="d-flex justify-content-center">
                   <Button
                     onClick={onSubmit}
                     type="submit"
