@@ -17,6 +17,8 @@ export default function ArticleCreate() {
   const [category, setCategory] = useState();
 
   const onSubmit = async (event) => {
+    event.preventDefault();
+
     const allData = {
       title: title,
       category: category,
@@ -27,10 +29,9 @@ export default function ArticleCreate() {
       dateTime: dayjs().format(),
     };
 
-    // event.preventDefault();
+    console.log(allData);
 
     await addArticle(allData);
-    history.push("/articles");
   };
 
   return (
@@ -67,11 +68,16 @@ export default function ArticleCreate() {
               <Form>
                 <Form.Group>
                   <Form.Label>Category</Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control
+                    as="select"
+                    onChange={(event) =>
+                      setCategory(event.target.value.toLowerCase())
+                    }
+                  >
                     <option selected="selected"></option>
-                    <option onChange={() => setCategory("bar")}>Bar</option>
-                    <option onChange={() => setCategory("food")}>Food</option>
-                    <option onChange={() => setCategory("hotel")}>Hotel</option>
+                    <option>Bar</option>
+                    <option>Food</option>
+                    <option>Hotel</option>
                   </Form.Control>
                 </Form.Group>
                 <Form.Group>
