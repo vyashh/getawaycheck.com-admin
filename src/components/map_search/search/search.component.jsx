@@ -11,13 +11,20 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Col, Row } from "react-bootstrap";
 
 const style = {
   width: "100%",
 };
 
-export default function Search({ panTo, setMarker }) {
+export default function Search({
+  panTo,
+  setMarker,
+  setAddress,
+  setLatLng,
+  showMap,
+  setShowMap,
+}) {
   const {
     ready,
     value,
@@ -30,35 +37,59 @@ export default function Search({ panTo, setMarker }) {
       radius: 200 * 1000, // meters
     },
   });
+
+  const onClickHandler = () => {
+    setShowMap(!showMap);
+  };
   return (
     // when a user selects a suggestion. The map will zoom in and add a marker to the selected address.
     // these functions are passed form the map component.
+
     <Combobox
       onSelect={async (address) => {
         setValue(address, false);
+        setAddress(address);
 
         try {
           const results = await getGeocode({ address });
           const { lat, lng } = await getLatLng(results[0]);
           panTo({ lat, lng });
           setMarker({ lat, lng });
+          setLatLng({ lat, lng });
         } catch (error) {
           console.log(error);
         }
       }}
     >
       <Form.Group id="location">
-        <Form.Label>Location</Form.Label>
-        <ComboboxInput
-          style={style}
-          className="form-control"
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
-          }}
-          disabled={!ready}
-          placeholder="Enter an address"
-        />
+        <Row>
+          <Col xl={10} lg={10} md={8} sm={12} xs={12}>
+            <ComboboxInput
+              style={style}
+              className="form-control"
+              value={value}
+              onChange={(event) => {
+                setValue(event.target.value);
+              }}
+              disabled={!ready}
+              placeholder="Enter an address"
+            />
+          </Col>
+          <Col xl={2} lg={2} md={4} sm={12} xs={12}>
+            {showMap ? (
+              <Button
+                className="btn btn-secondary w-100"
+                onClick={onClickHandler}
+              >
+                Done
+              </Button>
+            ) : (
+              <Button className="btn btn-light w-100" onClick={onClickHandler}>
+                Edit
+              </Button>
+            )}
+          </Col>
+        </Row>
       </Form.Group>
       <ComboboxPopover>
         <ComboboxList>

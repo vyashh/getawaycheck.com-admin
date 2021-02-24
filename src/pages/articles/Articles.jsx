@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "../../components/navbar/navbar.component";
 import SideBar from "../../components/sidebar/sidebar.component";
-import ArticleCreate from "../../components/article_create/articles_create.component";
+import ArticleCreate from "../../components/article-create/articles-create.component";
 
 export default function Dashboard() {
   const [isCreateArticle, setIsCreateArticle] = useState(false);
@@ -11,12 +11,20 @@ export default function Dashboard() {
       <NavBar />
       <SideBar activeNav="1">
         <button
-          className="btn btn-success"
+          className={`float-right btn ${
+            !isCreateArticle ? "btn-success" : "btn-light"
+          }`}
           onClick={() => {
             setIsCreateArticle(!isCreateArticle);
           }}
         >
-          Add event
+          {!isCreateArticle ? (
+            "Create Article"
+          ) : (
+            <span className="text-danger font-weight-bold" aria-hidden="true">
+              &times;
+            </span>
+          )}
         </button>
         {isCreateArticle ? (
           <ArticleCreate />

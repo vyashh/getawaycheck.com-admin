@@ -51,7 +51,6 @@ export default class SideBar extends Component {
             </main>
           </div>
         </div>
-        <Footer />
       </>
     );
   }
