@@ -6,9 +6,9 @@ import TextEditor from "../text-editor/text-editor.component";
 import dayjs from "dayjs";
 import "./articles-create.styles.scss";
 import { addArticle } from "../../services/firestore";
+import history from "../../services/history";
 
 export default function ArticleCreate() {
-  const history = useHistory();
   const [title, setTitle] = useState(null);
   const [address, setAddress] = useState(null);
   const [latLng, setLatLng] = useState({});
@@ -29,9 +29,9 @@ export default function ArticleCreate() {
       dateTime: dayjs().format(),
     };
 
-    console.log(allData);
-
     await addArticle(allData);
+    history.push("/articles");
+    window.location.reload();
   };
 
   return (

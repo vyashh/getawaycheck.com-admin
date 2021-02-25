@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../../services/store";
 import NavBar from "../../components/navbar/navbar.component";
 import SideBar from "../../components/sidebar/sidebar.component";
 import ArticleCreate from "../../components/article-create/articles-create.component";
+import ArticleList from "../../components/article-list/article-list.component";
 
 export default function Dashboard() {
+  const { articleData, loadingIndicator } = useContext(Context);
   const [isCreateArticle, setIsCreateArticle] = useState(false);
+  const [loading, setLoading] = loadingIndicator;
+  const [articles, setArticles] = articleData;
 
   return (
     <>
@@ -26,13 +31,8 @@ export default function Dashboard() {
             </span>
           )}
         </button>
-        {isCreateArticle ? (
-          <ArticleCreate />
-        ) : (
-          <div className="h-100 row align-items-center text-center">
-            <div className="col">Articles</div>
-          </div>
-        )}
+
+        {isCreateArticle ? <ArticleCreate /> : <ArticleList />}
       </SideBar>
     </>
   );

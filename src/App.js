@@ -1,14 +1,12 @@
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { Router, Switch, Route } from "react-router-dom";
+import history from "./services/history";
 import PrivateRoute from "./services/PrivateRoute";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Articles from "./pages/articles/Articles";
 import ArticleAdd from "./pages/articles/ArticleEdit";
 import { AuthProvider } from "./providers/AuthProvider";
-
-const history = createBrowserHistory();
 
 function App() {
   return (
