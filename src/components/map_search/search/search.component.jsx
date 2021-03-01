@@ -70,7 +70,6 @@ export default function Search({
               className="form-control"
               value={address ? address : null}
               onChange={(event) => {
-                console.log("change event");
                 setValue(event.target.value);
                 if (address) {
                   setAddress(event.target.value);
