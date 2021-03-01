@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
-import { updateArticle } from "../../services/firestore";
+import { updateArticle, deleteArticle } from "../../services/firestore";
 import history from "../../services/history";
 
 export default function ArticlesEdit({ doc }) {
@@ -16,7 +16,7 @@ export default function ArticlesEdit({ doc }) {
   const [categories, setCategories] = useState(["Bar", "Food", "Hotel"]);
   const [published, setPublished] = useState(["True", "False"]);
 
-  const onSubmit = async (event) => {
+  const onUpdate = async (event) => {
     event.preventDefault();
 
     const data = {
@@ -33,6 +33,19 @@ export default function ArticlesEdit({ doc }) {
     window.location.reload();
   };
 
+  const onDelete = async (event) => {
+    event.preventDefault();
+
+    deleteArticle(doc.id)
+      .then(() => {
+        history.push("/article/all");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <Row>
@@ -45,6 +58,7 @@ export default function ArticlesEdit({ doc }) {
                 type="text"
                 required
                 value={title}
+                onChange={(value) => setTitle(value.target.value)}
                 placeholder="Enter a title"
               />
             </Form.Group>
@@ -100,16 +114,16 @@ export default function ArticlesEdit({ doc }) {
                     })}
                   </Form.Control>
                 </Form.Group>
-                <Form.Group className="d-flex justify-content-center">
+                <Form.Group className="d-flex justify-content-between">
                   <Button
-                    onClick={onSubmit}
+                    onClick={onUpdate}
                     type="submit"
                     className="btn btn-warning"
                   >
                     Update
                   </Button>
                   <Button
-                    // onClick={onSubmit}
+                    onClick={onDelete}
                     type="submit"
                     className="btn btn-danger"
                   >

@@ -3,7 +3,8 @@ import dayjs from "dayjs";
 import history from "../../../services/history";
 
 export default function ListItem({ title, category, isPublic, dateTime, id }) {
-  isPublic = isPublic ? "True" : "False";
+  // console.log(isPublic, isPublic === "true" ? "True" : "False");
+  isPublic = isPublic === "true" ? "True" : "False";
   dateTime = dayjs(dateTime).format("DD-MM-YYYY HH:mm");
   category = category.charAt(0).toUpperCase() + category.slice(1);
 

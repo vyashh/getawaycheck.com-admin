@@ -15,3 +15,8 @@ export const updateArticle = async (id, data) => {
   const doc = articlesRef.doc(id);
   return doc.update(data);
 };
+
+export const deleteArticle = async (id) => {
+  const doc = articlesRef.doc(id);
+  return doc.delete();
+};
