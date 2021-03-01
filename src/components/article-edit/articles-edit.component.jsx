@@ -1,34 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
-import dayjs from "dayjs";
-import "./articles-create.styles.scss";
-import { addArticle } from "../../services/firestore";
+import { updateArticle } from "../../services/firestore";
 import history from "../../services/history";
 
-export default function ArticleCreate() {
-  const [title, setTitle] = useState(null);
-  const [address, setAddress] = useState(null);
-  const [latLng, setLatLng] = useState({});
-  const [content, setContent] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
-  const [category, setCategory] = useState();
+export default function ArticlesEdit({ doc }) {
+  const [id, setId] = useState(doc.id);
+  const [title, setTitle] = useState(doc.title);
+  const [content, setContent] = useState(doc.content);
+  const [isPublic, setIsPublic] = useState(doc.isPublic);
+  const [latLng, setLatLng] = useState(doc.latLng);
+  const [category, setCategory] = useState(doc.category);
+  const [address, setAddress] = useState(doc.address);
+  const [categories, setCategories] = useState(["Bar", "Food", "Hotel"]);
+  const [published, setPublished] = useState(["True", "False"]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
+      id: id,
       title: title,
-      category: category,
-      address: address,
-      latLng: latLng,
       content: content,
       isPublic: isPublic,
-      dateTime: dayjs().format(),
+      latLng: latLng,
+      category: category,
+      address: address,
     };
-
-    await addArticle(data);
+    await updateArticle(doc.id, data);
     history.push("/article/all");
     window.location.reload();
   };
@@ -43,8 +43,8 @@ export default function ArticleCreate() {
               <Form.Control
                 className="form-control form-control-lg no-border"
                 type="text"
-                onChange={(value) => setTitle(value.target.value)}
                 required
+                value={title}
                 placeholder="Enter a title"
               />
             </Form.Group>
@@ -53,6 +53,7 @@ export default function ArticleCreate() {
                 setAddress={setAddress}
                 setLatLng={setLatLng}
                 address={address}
+                latLng={latLng}
               />
             </Form.Group>
             <Form.Group id="text-editor">
@@ -73,29 +74,46 @@ export default function ArticleCreate() {
                       setCategory(event.target.value.toLowerCase())
                     }
                   >
-                    <option selected="selected"></option>
-                    <option>Bar</option>
-                    <option>Food</option>
-                    <option>Hotel</option>
+                    <option></option>
+                    {categories.map((item) => {
+                      if (item.toLowerCase() === category) {
+                        return <option selected>{item}</option>;
+                      }
+                      return <option>{item}</option>;
+                    })}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Publish</Form.Label>
                   <Form.Control
                     as="select"
-                    onChange={() => setIsPublic(!isPublic)}
+                    onChange={(event) =>
+                      setIsPublic(event.target.value.toLowerCase())
+                    }
                   >
-                    <option>True</option>
-                    <option selected="selected">False</option>
+                    {published.map((item) => {
+                      if (item.toLowerCase() === isPublic.toString()) {
+                        return <option selected>{item}</option>;
+                      }
+
+                      return <option>{item}</option>;
+                    })}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group className="d-flex justify-content-center">
                   <Button
                     onClick={onSubmit}
                     type="submit"
-                    className="btn btn-success"
+                    className="btn btn-warning"
                   >
-                    Submit
+                    Update
+                  </Button>
+                  <Button
+                    // onClick={onSubmit}
+                    type="submit"
+                    className="btn btn-danger"
+                  >
+                    <i class="bi bi-trash"></i>
                   </Button>
                 </Form.Group>
               </Form>

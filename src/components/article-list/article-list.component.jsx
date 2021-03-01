@@ -8,19 +8,14 @@ export default function ArticleList() {
   const [loading, setLoading] = loadingIndicator;
   const [articles, setArticles] = articleData;
 
-  //   console.log(articles);
-
   if (!articles) {
     return <h1>Loading</h1>;
   }
 
-  console.log(articles);
-
   return (
     <>
       <h1>Articles</h1>
-
-      <Table bordered size="sm">
+      <Table bordered size="sm" style={{ cursor: "pointer" }}>
         <thead>
           <tr>
             <th>Title</th>

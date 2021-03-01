@@ -5,10 +5,10 @@ export const Context = React.createContext();
 
 const Store = ({ children }) => {
   const articlesRef = db.collection("articles");
-
   const [errorLogin, setErrorLogin] = useState("");
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [articleData, setArticleData] = useState();
+  const [alertMessage, setAlertMessage] = useState("");
 
   const fetchArticleData = () => {
     articlesRef.get().then((item) => {
@@ -28,6 +28,7 @@ const Store = ({ children }) => {
         errorLogin: [errorLogin, setErrorLogin],
         loadingIndicator: [loadingIndicator, setLoadingIndicator],
         articleData: [articleData, setArticleData],
+        alertMessage: [alertMessage, setAlertMessage],
       }}
     >
       {children}

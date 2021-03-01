@@ -1,15 +1,18 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../services/store";
+import { Alert } from "react-bootstrap";
 import NavBar from "../../components/navbar/navbar.component";
 import SideBar from "../../components/sidebar/sidebar.component";
 import ArticleCreate from "../../components/article-create/articles-create.component";
 import ArticleList from "../../components/article-list/article-list.component";
 
 export default function Dashboard() {
-  const { articleData, loadingIndicator } = useContext(Context);
+  const { articleData, loadingIndicator, alertMessage } = useContext(Context);
   const [isCreateArticle, setIsCreateArticle] = useState(false);
   const [loading, setLoading] = loadingIndicator;
   const [articles, setArticles] = articleData;
+  const [alert, setAlert] = alertMessage;
+  const [show, setShow] = useState(true);
 
   return (
     <>
