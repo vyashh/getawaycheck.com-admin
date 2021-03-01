@@ -24,6 +24,7 @@ export default function Search({
   setLatLng,
   showMap,
   setShowMap,
+  address,
 }) {
   const {
     ready,
@@ -67,12 +68,15 @@ export default function Search({
             <ComboboxInput
               style={style}
               className="form-control"
-              value={value}
+              value={address ? address : null}
               onChange={(event) => {
                 setValue(event.target.value);
+                if (address) {
+                  setAddress(event.target.value);
+                }
               }}
               disabled={!ready}
-              placeholder="Enter an address"
+              placeholder="Enter address"
             />
           </Col>
           <Col xl={2} lg={2} md={4} sm={12} xs={12}>

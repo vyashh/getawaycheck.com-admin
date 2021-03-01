@@ -3,7 +3,7 @@ import { Context } from "../services/store";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { useAuth } from "../providers/AuthProvider";
 import { useHistory, Redirect } from "react-router-dom";
-import Loading from "../components/loading/loading,component";
+import Loading from "../components/loading/loading.component";
 
 export default function Signup() {
   const { errorLogin, loadingIndicator } = useContext(Context);

@@ -27,7 +27,7 @@ export default class SideBar extends Component {
                     </Link>
                   </li>
                   <li className="nav-item text-dark">
-                    <Link to="/articles">
+                    <Link to="/article/all">
                       <span
                         className={
                           this.props.activeNav === "1"

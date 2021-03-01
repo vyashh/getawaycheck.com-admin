@@ -1,14 +1,13 @@
 import React, { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
 import dayjs from "dayjs";
 import "./articles-create.styles.scss";
 import { addArticle } from "../../services/firestore";
+import history from "../../services/history";
 
 export default function ArticleCreate() {
-  const history = useHistory();
   const [title, setTitle] = useState(null);
   const [address, setAddress] = useState(null);
   const [latLng, setLatLng] = useState({});
@@ -19,7 +18,7 @@ export default function ArticleCreate() {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    const allData = {
+    const data = {
       title: title,
       category: category,
       address: address,
@@ -29,9 +28,9 @@ export default function ArticleCreate() {
       dateTime: dayjs().format(),
     };
 
-    console.log(allData);
-
-    await addArticle(allData);
+    await addArticle(data);
+    history.push("/article/all");
+    window.location.reload();
   };
 
   return (
@@ -94,7 +93,7 @@ export default function ArticleCreate() {
                   <Button
                     onClick={onSubmit}
                     type="submit"
-                    className="btn btn-danger"
+                    className="btn btn-success"
                   >
                     Submit
                   </Button>
