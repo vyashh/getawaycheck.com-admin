@@ -1,7 +1,8 @@
 import { db } from "../services/firebase";
 
 const articlesRef = db.collection("articles");
-const tagsRef = db.collection("tags");
+const tagsDocId = "keywords";
+const tagsRef = db.collection(tagsDocId);
 
 export const addArticle = async (article) => {
   const id = articlesRef.doc().id;
@@ -12,6 +13,10 @@ export const getTags = async () => {
   await tagsRef.get().then((items) => {
     return items.docs.map((item) => item.data().suggestions);
   });
+};
+
+export const addTags = async (tags) => {
+  const handleTags = await tagsRef.doc(tagsDocId).set({ suggestions: tags });
 };
 
 export const getSingleArticle = async (id) => {

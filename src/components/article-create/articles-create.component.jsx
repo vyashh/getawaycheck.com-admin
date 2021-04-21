@@ -1,14 +1,16 @@
-import React, { useRef, useState } from "react";
-import { Form, Button, Row, Col, Card } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Form, Row, Col } from "react-bootstrap";
 import ArticleSettings from "../article-settings/article-settings.component";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
 import dayjs from "dayjs";
 import "./articles-create.styles.scss";
-import { addArticle } from "../../services/firestore";
+import { addArticle, addTags } from "../../services/firestore";
 import history from "../../services/history";
+import { Context } from "../../services/store";
 
 export default function ArticleCreate() {
+  const { tagsData } = useContext(Context);
   const [title, setTitle] = useState(null);
   const [address, setAddress] = useState(null);
   const [latLng, setLatLng] = useState({});
@@ -16,7 +18,7 @@ export default function ArticleCreate() {
   const [isPublic, setIsPublic] = useState(false);
   const [category, setCategory] = useState();
   const [tags, setTags] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = tagsData;
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -32,6 +34,7 @@ export default function ArticleCreate() {
       tags: tags,
     };
 
+    await addTags([...suggestions, ...tags]);
     await addArticle(articleData);
     history.push("/article/all");
     window.location.reload();

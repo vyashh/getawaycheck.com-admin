@@ -68,6 +68,7 @@ export default function Map({ setAddress, setLatLng, latLng, address }) {
             center={center}
             options={options}
             onLoad={onMapLoad}
+            
           >
             <Marker key={0} position={marker} />
           </GoogleMap>

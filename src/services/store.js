@@ -6,7 +6,7 @@ export const Context = React.createContext();
 
 const Store = ({ children }) => {
   const articlesRef = db.collection("articles");
-  const tagsRef = db.collection("tags");
+  const tagsRef = db.collection("keywords");
   const [errorLogin, setErrorLogin] = useState("");
   const [loadingIndicator, setLoadingIndicator] = useState(true);
   const [articleData, setArticleData] = useState();

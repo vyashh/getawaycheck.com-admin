@@ -7,3 +7,13 @@
   padding: 0;
   margin: 0;
 }
+
+.ReactTags__tagInputField {
+  width: 100%;
+  border: none;
+}
+
+.ReactTags__tagInputField:focus {
+  // width: 100%;
+  outline: none;
+}
