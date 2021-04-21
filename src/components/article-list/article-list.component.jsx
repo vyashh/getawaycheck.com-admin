@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import Loading from "../../components/loading/loading.component";
 import ListItem from "./list-item/list-item.component";
 import { Table } from "react-bootstrap";
 import { Context } from "../../services/store";
@@ -9,7 +10,7 @@ export default function ArticleList() {
   const [articles, setArticles] = articleData;
 
   if (!articles) {
-    return <h1>Loading</h1>;
+    return <Loading />;
   }
 
   return (
@@ -26,7 +27,7 @@ export default function ArticleList() {
         </thead>
 
         {articles.map((article) => (
-          <ListItem {...article} />
+          <ListItem key={article.id} {...article} />
         ))}
       </Table>
     </>

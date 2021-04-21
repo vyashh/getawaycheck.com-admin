@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
+import ArticleSettings from "../article-settings/article-settings.component";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
 import dayjs from "dayjs";
@@ -14,11 +15,13 @@ export default function ArticleCreate() {
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [category, setCategory] = useState();
+  const [tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    const data = {
+    const articleData = {
       title: title,
       category: category,
       address: address,
@@ -26,9 +29,10 @@ export default function ArticleCreate() {
       content: content,
       isPublic: isPublic,
       dateTime: dayjs().format(),
+      tags: tags,
     };
 
-    await addArticle(data);
+    await addArticle(articleData);
     history.push("/article/all");
     window.location.reload();
   };
@@ -61,46 +65,17 @@ export default function ArticleCreate() {
           </Form>
         </Col>
         <Col xl={3} lg={3} md={4} sm={12} xs={12}>
-          <Card>
-            <Card.Header className="text-center">Article Settings</Card.Header>
-            <Card.Body>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Category</Form.Label>
-                  <Form.Control
-                    as="select"
-                    onChange={(event) =>
-                      setCategory(event.target.value.toLowerCase())
-                    }
-                  >
-                    <option selected="selected"></option>
-                    <option>Bar</option>
-                    <option>Food</option>
-                    <option>Hotel</option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Publish</Form.Label>
-                  <Form.Control
-                    as="select"
-                    onChange={() => setIsPublic(!isPublic)}
-                  >
-                    <option>True</option>
-                    <option selected="selected">False</option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group className="d-flex justify-content-center">
-                  <Button
-                    onClick={onSubmit}
-                    type="submit"
-                    className="btn btn-success"
-                  >
-                    Submit
-                  </Button>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
+          <ArticleSettings
+            isEdit={true}
+            onSubmit={onSubmit}
+            setCategory={setCategory}
+            setIsPublic={setIsPublic}
+            isPublic={isPublic}
+            tags={tags}
+            setTags={setTags}
+            suggestions={suggestions}
+            setSuggestions={setSuggestions}
+          />
         </Col>
       </Row>
     </div>
