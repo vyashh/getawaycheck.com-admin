@@ -1,7 +1,6 @@
 import React from "react";
 import NavBar from "../components/navbar/navbar.component";
 import SideBar from "../components/sidebar/sidebar.component";
-import Footer from "../components/footer/footer.component";
 
 export default function Dashboard() {
   return (
