@@ -15,6 +15,10 @@ export const getTags = async () => {
   });
 };
 
+export const getArticleTags = async (article) => {
+  return articlesRef.doc(article).get();
+};
+
 export const addTags = async (tags) => {
   const handleTags = await tagsRef.doc(tagsDocId).set({ suggestions: tags });
 };
