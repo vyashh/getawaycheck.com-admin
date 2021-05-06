@@ -5,12 +5,16 @@ import ImageResize from "quill-image-resize-module-react";
 Quill.register("modules/imageResize", ImageResize);
 
 export default function TextEditor({ content, setContent }) {
+  const imageHandler = () => {
+    console.log("image handler");
+  };
+
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
       ["bold", "italic", "underline", "strike"], // toggled buttons
-      ["blockquote", "code-block"],
+      ["blockquote"],
 
       [
         { list: "ordered" },
@@ -19,17 +23,15 @@ export default function TextEditor({ content, setContent }) {
         { indent: "+1" },
         { align: [] },
       ],
-      [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ direction: "rtl" }], // text direction,
 
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ color: [] }, { background: [] }],
 
       ["link", "image"],
 
       ["clean"], // remove formatting button
     ],
+    // handler: { imageHandler },
     imageResize: {
-      // parchment: Quill.import('parchment'),
       modules: ["Resize", "DisplaySize"],
     },
   };
