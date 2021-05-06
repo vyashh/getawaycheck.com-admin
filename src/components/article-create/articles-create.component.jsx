@@ -69,7 +69,7 @@ export default function ArticleCreate() {
         </Col>
         <Col xl={3} lg={3} md={4} sm={12} xs={12}>
           <ArticleSettings
-            isEdit={true}
+            isEdit={false}
             onSubmit={onSubmit}
             setCategory={setCategory}
             setIsPublic={setIsPublic}

@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-import { Form, Button, Row, Col, Card } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Form, Row, Col } from "react-bootstrap";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
-import { updateArticle, deleteArticle } from "../../services/firestore";
+import {
+  updateArticle,
+  deleteArticle,
+  getArticleTags,
+} from "../../services/firestore";
 import history from "../../services/history";
+import ArticleSettings from "../article-settings/article-settings.component";
+import { Context } from "../../services/store";
 
 export default function ArticlesEdit({ doc }) {
+  const { tagsData } = useContext(Context);
   const [id, setId] = useState(doc.id);
   const [title, setTitle] = useState(doc.title);
   const [content, setContent] = useState(doc.content);
@@ -15,6 +22,8 @@ export default function ArticlesEdit({ doc }) {
   const [address, setAddress] = useState(doc.address);
   const [categories, setCategories] = useState(["Bar", "Food", "Hotel"]);
   const [published, setPublished] = useState(["True", "False"]);
+  const [tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = tagsData;
 
   const onUpdate = async (event) => {
     event.preventDefault();
@@ -27,6 +36,7 @@ export default function ArticlesEdit({ doc }) {
       latLng: latLng,
       category: category,
       address: address,
+      tags: tags,
     };
     await updateArticle(doc.id, data);
     history.push("/article/all");
@@ -45,6 +55,15 @@ export default function ArticlesEdit({ doc }) {
         console.log(error);
       });
   };
+
+  const getArticles = () => {
+    getArticleTags(doc.id).then((article) => console.log(article.data()));
+  };
+
+  useEffect(() => {
+    getArticles();
+    setTags(doc.tags);
+  }, []);
 
   return (
     <div>
@@ -76,63 +95,18 @@ export default function ArticlesEdit({ doc }) {
           </Form>
         </Col>
         <Col xl={3} lg={3} md={4} sm={12} xs={12}>
-          <Card>
-            <Card.Header className="text-center">Article Settings</Card.Header>
-            <Card.Body>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Category</Form.Label>
-                  <Form.Control
-                    as="select"
-                    onChange={(event) =>
-                      setCategory(event.target.value.toLowerCase())
-                    }
-                  >
-                    <option></option>
-                    {categories.map((item) => {
-                      if (item.toLowerCase() === category) {
-                        return <option selected>{item}</option>;
-                      }
-                      return <option>{item}</option>;
-                    })}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Publish</Form.Label>
-                  <Form.Control
-                    as="select"
-                    onChange={(event) =>
-                      setIsPublic(event.target.value.toLowerCase())
-                    }
-                  >
-                    {published.map((item) => {
-                      if (item.toLowerCase() === isPublic.toString()) {
-                        return <option selected>{item}</option>;
-                      }
-
-                      return <option>{item}</option>;
-                    })}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group className="d-flex justify-content-between">
-                  <Button
-                    onClick={onUpdate}
-                    type="submit"
-                    className="btn btn-warning"
-                  >
-                    Update
-                  </Button>
-                  <Button
-                    onClick={onDelete}
-                    type="submit"
-                    className="btn btn-danger"
-                  >
-                    <i class="bi bi-trash"></i>
-                  </Button>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
+          <ArticleSettings
+            isEdit={true}
+            onSubmit={onUpdate}
+            setCategory={setCategory}
+            setIsPublic={setIsPublic}
+            isPublic={isPublic}
+            tags={tags}
+            setTags={setTags}
+            suggestions={suggestions}
+            setSuggestions={setSuggestions}
+            onDelete={onDelete}
+          />
         </Col>
       </Row>
     </div>

@@ -15,13 +15,12 @@ export default function ArticleSettings({
   setTags,
   suggestions,
   setSuggestions,
+  onDelete,
 }) {
   return (
     <div>
       <Card>
-        <Card.Header className="text-center">
-          {isEdit ? "Article Settings edit" : "Article Settings create"}
-        </Card.Header>
+        <Card.Header className="text-center">Article Settings</Card.Header>
         <Card.Body>
           <Form>
             <Form.Group>
@@ -45,8 +44,12 @@ export default function ArticleSettings({
                 setSuggestions={setSuggestions}
               />
             </Form.Group>
-            <Form.Group className="d-flex justify-content-center">
-              <ArticleSettingsButtons onSubmit={onSubmit} />
+            <Form.Group>
+              <ArticleSettingsButtons
+                isEdit={isEdit}
+                onSubmit={onSubmit}
+                onDelete={onDelete}
+              />
             </Form.Group>
           </Form>
         </Card.Body>
