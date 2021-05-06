@@ -13,8 +13,6 @@ export default function ArticleList() {
     return <Loading />;
   }
 
-  console.log(articles.length);
-
   return (
     <>
       <h1>Articles</h1>
