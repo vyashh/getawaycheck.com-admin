@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import ArticleSettings from "../article-settings/article-settings.component";
+import ArticleImages from "../article-images/article-images.component";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
 import dayjs from "dayjs";
@@ -19,6 +20,9 @@ export default function ArticleCreate() {
   const [category, setCategory] = useState();
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = tagsData;
+  const [imageUrls, setImageUrls] = useState([]);
+  const [imageDbRef, setImageDbRef] = useState([]);
+  const inputFile = useRef(null);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -53,6 +57,13 @@ export default function ArticleCreate() {
                 onChange={(value) => setTitle(value.target.value)}
                 required
                 placeholder="Enter a title"
+              />
+            </Form.Group>
+            <Form.Group id="images">
+              <ArticleImages
+                imageUrls={imageUrls}
+                setImageUrls={setImageUrls}
+                inputRef={inputFile}
               />
             </Form.Group>
             <Form.Group id="location">

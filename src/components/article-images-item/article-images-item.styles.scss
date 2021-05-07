@@ -1,0 +1,26 @@
+.article-images-item {
+  cursor: pointer;
+  position: relative;
+  width: 4em;
+  height: 4em;
+  background-color: rgb(221, 221, 221);
+  text-align: center;
+  margin-right: 1em;
+  font-size: 1.5em;
+  background-size: contain;
+  color: white;
+
+  i {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+  }
+}
+
+.image {
+  width: 4em;
+  height: 4em;
+}

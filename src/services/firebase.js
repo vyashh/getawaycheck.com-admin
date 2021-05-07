@@ -2,9 +2,10 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/analytics";
+import "firebase/storage";
 
 // get config keys from .env file
-const app = firebase.initializeApp({
+export const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -17,5 +18,6 @@ const app = firebase.initializeApp({
 firebase.analytics(); // google analytics instance
 export const auth = app.auth(); // firebase auth instance
 export const db = app.firestore(); // firebase firestore instance
+export const base = app; // firebase storage instance
 
 export default app;

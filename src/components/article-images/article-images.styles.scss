@@ -1,0 +1,35 @@
+.article-images {
+  &__title {
+  }
+
+  &__image-preview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+
+    &__item {
+      cursor: pointer;
+      position: relative;
+      width: 8em;
+      height: 8em;
+      background-color: rgb(221, 221, 221);
+      color: white;
+      text-align: center;
+      margin-right: 1em;
+      font-size: 1.5em;
+      background-size: contain;
+
+      i {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+}

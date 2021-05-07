@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "getawaycheck-30949"
+  },
+  "targets": {
+    "getawaycheck-30949": {
+      "hosting": {
+        "admin": [
+          "admin-getawaycheck-30949"
+        ]
+      }
+    }
+  }
+}
