@@ -21,7 +21,6 @@ export default function ArticleCreate() {
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = tagsData;
   const [imageUrls, setImageUrls] = useState([]);
-  const [imageDbRef, setImageDbRef] = useState([]);
   const inputFile = useRef(null);
 
   const onSubmit = async (event) => {
@@ -29,13 +28,14 @@ export default function ArticleCreate() {
 
     const articleData = {
       title: title,
+      content: content,
       category: category,
       address: address,
       latLng: latLng,
-      content: content,
       isPublic: isPublic,
       dateTime: dayjs().format(),
       tags: tags,
+      imageUrls: imageUrls,
     };
 
     await addTags([...suggestions, ...tags]);

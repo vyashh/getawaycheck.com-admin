@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 export default function ArticleSettingsButtons({ onSubmit, isEdit, onDelete }) {
-  console.log(isEdit);
   return (
     <div
       className={`d-flex ${

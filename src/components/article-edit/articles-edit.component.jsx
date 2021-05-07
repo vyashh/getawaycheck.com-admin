@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import Map from "../map_search/map/map.component";
 import TextEditor from "../text-editor/text-editor.component";
@@ -10,6 +10,8 @@ import {
 import history from "../../services/history";
 import ArticleSettings from "../article-settings/article-settings.component";
 import { Context } from "../../services/store";
+import ArticleImages from "../article-images/article-images.component";
+import dayjs from "dayjs";
 
 export default function ArticlesEdit({ doc }) {
   const { tagsData } = useContext(Context);
@@ -24,6 +26,8 @@ export default function ArticlesEdit({ doc }) {
   const [published, setPublished] = useState(["True", "False"]);
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = tagsData;
+  const [imageUrls, setImageUrls] = useState([]);
+  const inputFile = useRef(null);
 
   const onUpdate = async (event) => {
     event.preventDefault();
@@ -33,10 +37,12 @@ export default function ArticlesEdit({ doc }) {
       title: title,
       content: content,
       isPublic: isPublic,
+      dateTime: dayjs().format(),
       latLng: latLng,
       category: category,
       address: address,
       tags: tags,
+      imageUrls: imageUrls,
     };
     await updateArticle(doc.id, data);
     history.push("/article/all");
@@ -63,6 +69,7 @@ export default function ArticlesEdit({ doc }) {
   useEffect(() => {
     getArticles();
     setTags(doc.tags);
+    setImageUrls(doc.imageUrls);
   }, []);
 
   return (
@@ -79,6 +86,13 @@ export default function ArticlesEdit({ doc }) {
                 value={title}
                 onChange={(value) => setTitle(value.target.value)}
                 placeholder="Enter a title"
+              />
+            </Form.Group>
+            <Form.Group id="images">
+              <ArticleImages
+                imageUrls={imageUrls}
+                setImageUrls={setImageUrls}
+                inputRef={inputFile}
               />
             </Form.Group>
             <Form.Group id="location">
